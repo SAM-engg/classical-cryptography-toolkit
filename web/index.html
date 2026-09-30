@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classical Cryptography Toolkit | ECM Network Security</title>
+  <meta name="description" content="Interactive Classical Cryptography Toolkit featuring Caesar, Monoalphabetic, Playfair, Hill, Vigenère, One-Time Pad, Rail Fence, and Columnar Transposition ciphers.">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-theme">
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h2>CRYPTO TOOLKIT</h2>
+          <span>ECM Network Security</span>
+        </div>
+      </div>
+
+      <nav class="nav-sections">
+        <div class="nav-group">
+          <span class="group-title">SUBSTITUTION CIPHERS</span>
+          <button class="nav-item active" data-cipher="Caesar Cipher" id="nav-caesar">
+            <span class="num">1</span> Caesar Cipher
+          </button>
+          <button class="nav-item" data-cipher="Monoalphabetic Cipher" id="nav-mono">
+            <span class="num">2</span> Monoalphabetic
+          </button>
+          <button class="nav-item" data-cipher="Playfair Cipher" id="nav-playfair">
+            <span class="num">3</span> Playfair Cipher
+          </button>
+          <button class="nav-item" data-cipher="Hill Cipher" id="nav-hill">
+            <span class="num">4</span> Hill Cipher
+          </button>
+          <button class="nav-item" data-cipher="Vigenere Cipher" id="nav-vigenere">
+            <span class="num">5</span> Vigenère Cipher
+          </button>
+          <button class="nav-item" data-cipher="One-Time Pad" id="nav-otp">
+            <span class="num">6</span> One-Time Pad
+          </button>
+        </div>
+
+        <div class="nav-group">
+          <span class="group-title">TRANSPOSITION CIPHERS</span>
+          <button class="nav-item" data-cipher="Rail Fence Cipher" id="nav-rail">
+            <span class="num">7</span> Rail Fence Cipher
+          </button>
+          <button class="nav-item" data-cipher="Columnar Transposition Cipher" id="nav-columnar">
+            <span class="num">8</span> Columnar Transposition
+          </button>
+        </div>
+
+        <div class="nav-group">
+          <span class="group-title">TOOLS & ANALYSIS</span>
+          <button class="nav-item tool-btn" data-view="compare" id="nav-compare">
+            <span class="num">9</span> Compare Algorithms
+          </button>
+          <button class="nav-item tool-btn" data-view="file-crypto" id="nav-file-enc">
+            <span class="num">10</span> Encrypt Text File
+          </button>
+          <button class="nav-item tool-btn" data-view="file-crypto" id="nav-file-dec">
+            <span class="num">11</span> Decrypt Text File
+          </button>
+          <button class="nav-item tool-btn" data-view="help" id="nav-help">
+            <span class="num">12</span> Help & Theory
+          </button>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="project-tag">
+          <strong>Final Year Mini-Project</strong>
+          <p>Class: ECM 2026–27</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="main-content">
+      <!-- Top Navbar -->
+      <header class="top-nav">
+        <div class="header-info">
+          <h1 id="page-title">CLASSICAL CRYPTOGRAPHY TOOLKIT</h1>
+          <span class="badge" id="category-badge">Substitution Cipher</span>
+        </div>
+        <div class="header-actions">
+          <div class="latency-pill" id="latency-display">
+            <span class="pulse-dot"></span>
+            <span id="latency-text">Ready</span>
+          </div>
+          <button class="btn btn-outline" id="load-sample-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Load Verified Sample
+          </button>
+        </div>
+      </header>
+
+      <!-- View 1: Interactive Cipher Studio -->
+      <section class="view-panel active" id="cipher-view">
+        <!-- Theory Banner Card -->
+        <div class="glass-card info-banner">
+          <div class="banner-content">
+            <div class="formula-block">
+              <span class="formula-label">MATHEMATICAL FORMULA:</span>
+              <code id="cipher-formula">C_i = (P_i + k) mod 26</code>
+            </div>
+            <p id="cipher-desc">
+              The Caesar Cipher shifts letters forward by a fixed integer key modulo 26. Case, spaces, and punctuation are preserved.
+            </p>
+          </div>
+        </div>
+
+        <!-- Key Configuration Card -->
+        <div class="glass-card key-card">
+          <div class="key-header">
+            <label for="key-input" id="key-label">Shift Key (Integer 0–25):</label>
+            <span class="key-hint" id="key-hint">Enter integer shift (e.g. 5)</span>
+          </div>
+          <div class="key-input-row">
+            <input type="text" id="key-input" class="text-field" value="5" placeholder="Enter key...">
+            <button class="btn btn-secondary" id="otp-gen-btn" style="display: none;">
+              Generate CSPRNG Key
+            </button>
+          </div>
+          <!-- Matrix visualizer for Hill / Playfair -->
+          <div id="visualizer-container" style="display: none;"></div>
+        </div>
+
+        <!-- Two-Pane Crypto Studio -->
+        <div class="crypto-grid">
+          <!-- Plaintext Card -->
+          <div class="glass-card text-card">
+            <div class="card-header">
+              <span class="card-title">Plaintext Input</span>
+              <span class="char-count" id="pt-char-count">16 chars</span>
+            </div>
+            <textarea id="plaintext-input" class="crypto-textarea" spellcheck="false" placeholder="Enter plaintext to encrypt...">NETWORK SECURITY</textarea>
+            <div class="card-actions">
+              <button class="btn btn-primary" id="encrypt-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                ENCRYPT
+              </button>
+              <button class="btn btn-outline" id="clear-pt-btn">Clear</button>
+            </div>
+          </div>
+
+          <!-- Ciphertext / Output Card -->
+          <div class="glass-card text-card">
+            <div class="card-header">
+              <span class="card-title">Output Result</span>
+              <span class="char-count" id="ct-char-count">0 chars</span>
+            </div>
+            <textarea id="output-text" class="crypto-textarea" spellcheck="false" placeholder="Output will appear here..." readonly></textarea>
+            <div class="card-actions">
+              <button class="btn btn-accent" id="decrypt-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
+                DECRYPT
+              </button>
+              <button class="btn btn-outline" id="swap-btn" title="Transfer output to input for round-trip testing">
+                Use as Input
+              </button>
+              <button class="btn btn-outline" id="copy-btn">
+                Copy
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- View 2: Algorithm Comparison (Option 9) -->
+      <section class="view-panel" id="compare-view" style="display: none;">
+        <div class="glass-card">
+          <div class="card-header">
+            <div>
+              <h2>9. Algorithm Comparison & Benchmarking</h2>
+              <p class="subtitle">Select ciphers, supply benchmark text, and evaluate throughput, latency, and ciphertext expansion.</p>
+            </div>
+            <button class="btn btn-primary" id="run-compare-btn">Run Comparison Benchmark</button>
+          </div>
+
+          <div class="compare-input-box">
+            <label for="compare-text-input">Benchmark Plaintext:</label>
+            <input type="text" id="compare-text-input" class="text-field" value="FINAL YEAR ECM NETWORK SECURITY PERFORMANCE EVALUATION">
+          </div>
+
+          <div class="ciphers-selector-grid">
+            <label class="checkbox-pill"><input type="checkbox" value="Caesar Cipher" checked> Caesar</label>
+            <label class="checkbox-pill"><input type="checkbox" value="Monoalphabetic Cipher" checked> Monoalphabetic</label>
+            <label class="checkbox-pill"><input type="checkbox" value="Playfair Cipher" checked> Playfair</label>
+            <label class="checkbox-pill"><input type="checkbox" value="Hill Cipher" checked> Hill (2x2)</label>
+            <label class="checkbox-pill"><input type="checkbox" value="Vigenere Cipher" checked> Vigenère</label>
+            <label class="checkbox-pill"><input type="checkbox" value="One-Time Pad" checked> One-Time Pad</label>
+            <label class="checkbox-pill"><input type="checkbox" value="Rail Fence Cipher" checked> Rail Fence</label>
+            <label class="checkbox-pill"><input type="checkbox" value="Columnar Transposition Cipher" checked> Columnar</label>
+          </div>
+
+          <div class="table-container">
+            <table class="benchmark-table" id="compare-table">
+              <thead>
+                <tr>
+                  <th>Cipher Algorithm</th>
+                  <th>Category</th>
+                  <th>Input Len</th>
+                  <th>Cipher Len</th>
+                  <th>Enc Time (ms)</th>
+                  <th>Dec Time (ms)</th>
+                  <th>Round-Trip</th>
+                  <th>Implementation Notes</th>
+                </tr>
+              </thead>
+              <tbody id="compare-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout-box warning-callout">
+            <strong>⚠️ Cybersecurity Academic Principle:</strong>
+            <p>Execution latency does NOT correlate with cryptographic security. Simpler ciphers like Caesar or Rail Fence exhibit negligible latency but are easily broken in seconds via brute-force or frequency analysis.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- View 3: File Cryptography (Options 10 & 11) -->
+      <section class="view-panel" id="file-view" style="display: none;">
+        <div class="glass-card">
+          <div class="card-header">
+            <div>
+              <h2 id="file-mode-title">10. Encrypt Text File</h2>
+              <p class="subtitle">Safely load UTF-8 files, preview contents, apply classical encryption, and save to a new destination.</p>
+            </div>
+          </div>
+
+          <div class="file-dropzone" id="file-dropzone">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="12" y1="18" x2="12" y2="12"></line>
+              <line x1="9" y1="15" x2="15" y2="15"></line>
+            </svg>
+            <p><strong>Click to browse</strong> or drag and drop a UTF-8 text file (.txt)</p>
+            <span class="file-name-tag" id="loaded-file-name">No file selected</span>
+            <input type="file" id="file-upload-input" accept=".txt,.text,.md" style="display: none;">
+          </div>
+
+          <div class="file-control-row">
+            <div class="control-col">
+              <label for="file-cipher-select">Select Cipher:</label>
+              <select id="file-cipher-select" class="select-field">
+                <option value="Caesar Cipher">Caesar Cipher</option>
+                <option value="Monoalphabetic Cipher">Monoalphabetic Cipher</option>
+                <option value="Playfair Cipher">Playfair Cipher</option>
+                <option value="Hill Cipher">Hill Cipher</option>
+                <option value="Vigenere Cipher">Vigenère Cipher</option>
+                <option value="One-Time Pad">One-Time Pad</option>
+                <option value="Rail Fence Cipher">Rail Fence Cipher</option>
+                <option value="Columnar Transposition Cipher">Columnar Transposition</option>
+              </select>
+            </div>
+            <div class="control-col">
+              <label for="file-key-input">Key:</label>
+              <input type="text" id="file-key-input" class="text-field" value="5">
+            </div>
+            <div class="control-col actions-col">
+              <button class="btn btn-primary" id="file-process-btn">PROCESS FILE</button>
+              <button class="btn btn-secondary" id="file-download-btn" disabled>DOWNLOAD RESULT</button>
+            </div>
+          </div>
+
+          <div class="crypto-grid">
+            <div class="glass-card preview-card">
+              <span class="card-title">File Input Preview</span>
+              <textarea id="file-input-preview" class="crypto-textarea" readonly placeholder="Loaded file content preview..."></textarea>
+            </div>
+            <div class="glass-card preview-card">
+              <span class="card-title">Processed Output Preview</span>
+              <textarea id="file-output-preview" class="crypto-textarea" readonly placeholder="Processed file content preview..."></textarea>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- View 4: Help & Theory (Option 12) -->
+      <section class="view-panel" id="help-view" style="display: none;">
+        <div class="glass-card">
+          <h2>12. Classical Cryptography Theory & Educational Guide</h2>
+          <p class="subtitle">Mathematical foundations, key spaces, and cryptanalytic vulnerabilities.</p>
+
+          <div class="theory-grid">
+            <div class="theory-card">
+              <h3>1. Caesar Cipher</h3>
+              <p><strong>Principle:</strong> Monoalphabetic substitution shifting letters by $k \pmod{26}$.</p>
+              <p><strong>Key Space:</strong> 25 non-trivial keys. Trivially broken via brute force or single-letter frequency analysis (ETAOIN SHRDLU).</p>
+            </div>
+            <div class="theory-card">
+              <h3>2. Monoalphabetic Substitution</h3>
+              <p><strong>Principle:</strong> Arbitrary 1-to-1 letter mapping across standard A–Z.</p>
+              <p><strong>Key Space:</strong> $26! \approx 4.03 \times 10^{26}$. Directly preserves natural language letter frequency distribution.</p>
+            </div>
+            <div class="theory-card">
+              <h3>3. Playfair Cipher</h3>
+              <p><strong>Principle:</strong> Digraphic substitution on a $5 \times 5$ grid (combining I and J). Inserts filler 'X' for duplicate letters.</p>
+              <p><strong>Weakness:</strong> Digraph frequency analysis (TH, HE, IN, ER).</p>
+            </div>
+            <div class="theory-card">
+              <h3>4. Hill Cipher</h3>
+              <p><strong>Principle:</strong> Polygraphic linear algebra: $\mathbf{C} = (\mathbf{P} \cdot K) \pmod{26}$.</p>
+              <p><strong>Invertibility:</strong> Requires $\gcd(\det(K), 26) = 1$. Broken via Known-Plaintext Attack (KPA) using Gaussian elimination mod 26.</p>
+            </div>
+            <div class="theory-card">
+              <h3>5. Vigenère Cipher</h3>
+              <p><strong>Principle:</strong> Polyalphabetic repeating keyword shift $C_i = (P_i + K_j) \pmod{26}$.</p>
+              <p><strong>Weakness:</strong> Kasiski examination and Friedman Index of Coincidence factor key length.</p>
+            </div>
+            <div class="theory-card">
+              <h3>6. One-Time Pad (Vernam)</h3>
+              <p><strong>Principle:</strong> Proven perfect secrecy by Claude Shannon (1949).</p>
+              <p><strong>Rules:</strong> Truly random key, length equal to message, secret, NEVER reused (two-time pad crib dragging: $C_1 \oplus C_2 = P_1 \oplus P_2$).</p>
+            </div>
+            <div class="theory-card">
+              <h3>7. Rail Fence Cipher</h3>
+              <p><strong>Principle:</strong> Diagonal zigzag transposition across $k$ rails.</p>
+              <p><strong>Weakness:</strong> Frequencies remain unchanged; small depth key space.</p>
+            </div>
+            <div class="theory-card">
+              <h3>8. Columnar Transposition</h3>
+              <p><strong>Principle:</strong> Text written in rows of width $W$, read out column-by-column according to key rank.</p>
+              <p><strong>Weakness:</strong> Anagramming and bigram reconstruction.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Status Toast / Alert -->
+      <div id="toast" class="toast"></div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

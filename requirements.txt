@@ -1,0 +1,14 @@
+# Classical Cryptography Toolkit Requirements
+# Final Year ECM Network Security Mini-Project (2026-27)
+
+# Web Server & REST API Framework (Required for Cloud Hosting)
+fastapi>=0.100.0
+uvicorn[standard]>=0.23.0
+pydantic>=2.0.0
+
+# Automated Testing
+pytest>=8.0.0
+
+# Document & Presentation Generators
+reportlab>=4.0.0
+python-pptx>=1.0.0

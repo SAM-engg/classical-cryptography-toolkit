@@ -1,0 +1,69 @@
+================================================================================
+CLASSICAL CRYPTOGRAPHY TOOLKIT - VERIFIED SAMPLE USAGE AND TEST VECTORS
+================================================================================
+
+1. CAESAR CIPHER
+   - Plaintext : NETWORK SECURITY
+   - Key       : 5
+   - Ciphertext: SJYBTWP XJHZWNYD
+   - Decrypted : NETWORK SECURITY
+   - Note      : Verified A-Z shift rule. Explains correction for the assignment
+                 typo that mistakenly formatted the ciphertext as 'SJYBTW P XJHZWNYD'.
+
+2. MONOALPHABETIC SUBSTITUTION CIPHER
+   - Plaintext : CLASSICAL CRYPTOGRAPHY
+   - Key       : QWERTYUIOPASDFGHJKLZXCVBNM
+   - Ciphertext: ESQLLOEQS EKNHZGUKQHIN
+   - Decrypted : CLASSICAL CRYPTOGRAPHY
+
+3. PLAYFAIR CIPHER
+   - Plaintext : INSTRUMENTS
+   - Keyword   : MONARCHY
+   - Matrix    :
+                 M O N A R
+                 C H Y B D
+                 E F G I K  (Note: J is merged into I)
+                 L P Q S T
+                 U V W X Z
+   - Digraphs  : IN ST RU ME NT SX (padded odd length with 'X')
+   - Ciphertext: GATLMZCLRQXA
+   - Decrypted : INSTRUMENTSX
+
+4. HILL CIPHER (2x2 Matrix)
+   - Plaintext : HELP
+   - Key Matrix: 3 3 2 5
+                 det(K) = (3*5 - 3*2) = 9 mod 26.
+                 gcd(9, 26) = 1 (Invertible mod 26).
+                 det^(-1) mod 26 = 3 (since 9 * 3 = 27 = 1 mod 26).
+                 adj(K) = [5, -3; -2, 3] = [5, 23; 24, 3] mod 26.
+                 K^(-1) = 3 * [5, 23; 24, 3] = [15, 69; 72, 9] = [15, 17; 20, 9] mod 26.
+   - Vector 'HE': [7, 4] * [3, 3; 2, 5] = [21 + 8, 21 + 20] = [29, 41] = [3, 15] = 'DP'
+   - Vector 'LP': [11, 15] * [3, 3; 2, 5] = [33 + 30, 33 + 75] = [63, 108] = [11, 4] = 'LE'
+   - Ciphertext: DPLE
+   - Decrypted : HELP
+
+5. VIGENÈRE CIPHER
+   - Plaintext : ATTACKATDAWN
+   - Keyword   : LEMON
+   - Ciphertext: LXFOPVEFRNHR
+   - Decrypted : ATTACKATDAWN
+
+6. ONE-TIME PAD
+   - Plaintext : PERFECT SECRECY
+   - Keystream : Generated via CSPRNG (secrets.choice from A-Z)
+   - Length    : Exactly 14 alphabetic letters
+   - Decrypted : PERFECT SECRECY
+
+7. RAIL FENCE CIPHER
+   - Plaintext : DEFEND THE EAST WALL
+   - Rails (k) : 3
+   - Ciphertext: DNHAWEEDTEES ALF  TL
+   - Decrypted : DEFEND THE EAST WALL
+
+8. COLUMNAR TRANSPOSITION CIPHER
+   - Plaintext : WE ARE DISCOVERED FLEE AT ONCE
+   - Keyword   : ZEBRA
+   - Order     : A(4), B(2), E(1), R(3), Z(0) -> Columns [4, 2, 1, 3, 0]
+   - Ciphertext: RSRLTE DV  NE ODEOAIEFACWECEE 
+   - Decrypted : WE ARE DISCOVERED FLEE AT ONCE
+================================================================================

@@ -1,0 +1,13 @@
+NETWORK SECURITY AND CLASSICAL CRYPTOGRAPHY MINI-PROJECT (2026-27)
+Course: Network Security
+Branch: Final Year ECM
+
+Classical ciphers form the historical bedrock of contemporary cryptography.
+By investigating monoalphabetic substitution, polyalphabetic substitution,
+polygraphic ciphers, and transposition ciphers, students comprehend the
+core concepts of confusion, diffusion, and cryptanalysis.
+
+Test Phrases:
+1. THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG.
+2. Attack at dawn! Rendezvous coordinates: Sector 7G.
+3. Perfect secrecy requires uniform randomness and one-time key usage.

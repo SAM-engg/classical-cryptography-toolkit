@@ -1,0 +1,52 @@
+```mermaid
+flowchart TD
+    Start([Launch Classical Cryptography Toolkit]) --> InitUI[Initialize Tkinter Graphical User Interface]
+    InitUI --> DisplayMenu[Display Main Navigation Menu\nOptions 1 to 13]
+
+    DisplayMenu --> Choice{User Selection}
+
+    %% Section 1: Substitution Ciphers
+    Choice -->|Options 1 to 6| SubCiphers[Substitution Ciphers\nCaesar, Monoalphabetic, Playfair, Hill, Vigenere, OTP]
+    SubCiphers --> InputData[Input Plaintext & Key]
+    InputData --> ValidateKey{Validate Key & Input\nvia validators.py}
+    ValidateKey -->|Invalid| ShowError[Display Detailed Validation Error]
+    ShowError --> InputData
+    ValidateKey -->|Valid| ExecuteCipher[Execute Modular Arithmetic / Matrix / Keystream]
+    ExecuteCipher --> MeasureTime[Record Execution Latency in ms]
+    MeasureTime --> DisplayOutput[Render Output Ciphertext / Decrypted Text]
+
+    %% Section 2: Transposition Ciphers
+    Choice -->|Options 7 to 8| TransCiphers[Transposition Ciphers\nRail Fence, Columnar Transposition]
+    TransCiphers --> InputTrans[Input Text & Key Depth/Keyword]
+    InputTrans --> ValidateTrans{Validate Key & Rails}
+    ValidateTrans -->|Invalid| ShowError
+    ValidateTrans -->|Valid| PermuteGrid[Reorder Characters via Zigzag or Column Permutation]
+    PermuteGrid --> MeasureTime
+
+    %% Section 3: Algorithm Comparison
+    Choice -->|Option 9| CompareEngine[Algorithm Comparison Engine\ncomparison.py]
+    CompareEngine --> SelectMulti[Select Ciphers & Benchmark Text]
+    SelectMulti --> BenchmarkLoop[Iterate through Ciphers:\nTime Encrypt & Decrypt\nVerify Round-Trip Integrity]
+    BenchmarkLoop --> RenderTable[Populate Treeview Comparison Table\nDisplay Execution Latency & Expansion]
+
+    %% Section 4: File Operations
+    Choice -->|Options 10 & 11| FileIO[Text File Encryption / Decryption\nfile_operations.py]
+    FileIO --> OpenFileDialog[Prompt User via Open File Dialog]
+    OpenFileDialog --> ValidateEncoding{UTF-8 & Non-Empty?}
+    ValidateEncoding -->|Error| ShowError
+    ValidateEncoding -->|Valid| PreviewSource[Preview File Content]
+    PreviewSource --> ProcessFile[Apply Selected Cipher Algorithm]
+    ProcessFile --> PreviewProcessed[Preview Ciphertext Output]
+    PreviewProcessed --> SaveAsDialog[Prompt Save As... Output File Dialog]
+    SaveAsDialog --> WriteSafe[Safely Write to Destination File\nPrevent Accidental Overwrite]
+
+    %% Section 5: Help & Exit
+    Choice -->|Option 12| ShowHelp[Render Educational Theory & Mathematical Formulas]
+    Choice -->|Option 13| ExitApp[Confirm Exit Dialog & Clean Up Resources]
+    ExitApp --> End([Application Terminated])
+
+    DisplayOutput --> DisplayMenu
+    RenderTable --> DisplayMenu
+    WriteSafe --> DisplayMenu
+    ShowHelp --> DisplayMenu
+```
